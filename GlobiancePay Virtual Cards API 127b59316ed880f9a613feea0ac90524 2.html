@@ -1,0 +1,931 @@
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"/><title>GlobiancePay Virtual Cards API</title><style>
+/* cspell:disable-file */
+/* webkit printing magic: print all background colors */
+html {
+	-webkit-print-color-adjust: exact;
+}
+* {
+	box-sizing: border-box;
+	-webkit-print-color-adjust: exact;
+}
+
+html,
+body {
+	margin: 0;
+	padding: 0;
+}
+@media only screen {
+	body {
+		margin: 2em auto;
+		max-width: 900px;
+		color: rgb(55, 53, 47);
+	}
+}
+
+body {
+	line-height: 1.5;
+	white-space: pre-wrap;
+}
+
+a,
+a.visited {
+	color: inherit;
+	text-decoration: underline;
+}
+
+.pdf-relative-link-path {
+	font-size: 80%;
+	color: #444;
+}
+
+h1,
+h2,
+h3 {
+	letter-spacing: -0.01em;
+	line-height: 1.2;
+	font-weight: 600;
+	margin-bottom: 0;
+}
+
+.page-title {
+	font-size: 2.5rem;
+	font-weight: 700;
+	margin-top: 0;
+	margin-bottom: 0.75em;
+}
+
+h1 {
+	font-size: 1.875rem;
+	margin-top: 1.875rem;
+}
+
+h2 {
+	font-size: 1.5rem;
+	margin-top: 1.5rem;
+}
+
+h3 {
+	font-size: 1.25rem;
+	margin-top: 1.25rem;
+}
+
+.source {
+	border: 1px solid #ddd;
+	border-radius: 3px;
+	padding: 1.5em;
+	word-break: break-all;
+}
+
+.callout {
+	border-radius: 3px;
+	padding: 1rem;
+}
+
+figure {
+	margin: 1.25em 0;
+	page-break-inside: avoid;
+}
+
+figcaption {
+	opacity: 0.5;
+	font-size: 85%;
+	margin-top: 0.5em;
+}
+
+mark {
+	background-color: transparent;
+}
+
+.indented {
+	padding-left: 1.5em;
+}
+
+hr {
+	background: transparent;
+	display: block;
+	width: 100%;
+	height: 1px;
+	visibility: visible;
+	border: none;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.09);
+}
+
+img {
+	max-width: 100%;
+}
+
+@media only print {
+	img {
+		max-height: 100vh;
+		object-fit: contain;
+	}
+}
+
+@page {
+	margin: 1in;
+}
+
+.collection-content {
+	font-size: 0.875rem;
+}
+
+.column-list {
+	display: flex;
+	justify-content: space-between;
+}
+
+.column {
+	padding: 0 1em;
+}
+
+.column:first-child {
+	padding-left: 0;
+}
+
+.column:last-child {
+	padding-right: 0;
+}
+
+.table_of_contents-item {
+	display: block;
+	font-size: 0.875rem;
+	line-height: 1.3;
+	padding: 0.125rem;
+}
+
+.table_of_contents-indent-1 {
+	margin-left: 1.5rem;
+}
+
+.table_of_contents-indent-2 {
+	margin-left: 3rem;
+}
+
+.table_of_contents-indent-3 {
+	margin-left: 4.5rem;
+}
+
+.table_of_contents-link {
+	text-decoration: none;
+	opacity: 0.7;
+	border-bottom: 1px solid rgba(55, 53, 47, 0.18);
+}
+
+table,
+th,
+td {
+	border: 1px solid rgba(55, 53, 47, 0.09);
+	border-collapse: collapse;
+}
+
+table {
+	border-left: none;
+	border-right: none;
+}
+
+th,
+td {
+	font-weight: normal;
+	padding: 0.25em 0.5em;
+	line-height: 1.5;
+	min-height: 1.5em;
+	text-align: left;
+}
+
+th {
+	color: rgba(55, 53, 47, 0.6);
+}
+
+ol,
+ul {
+	margin: 0;
+	margin-block-start: 0.6em;
+	margin-block-end: 0.6em;
+}
+
+li > ol:first-child,
+li > ul:first-child {
+	margin-block-start: 0.6em;
+}
+
+ul > li {
+	list-style: disc;
+}
+
+ul.to-do-list {
+	padding-inline-start: 0;
+}
+
+ul.to-do-list > li {
+	list-style: none;
+}
+
+.to-do-children-checked {
+	text-decoration: line-through;
+	opacity: 0.375;
+}
+
+ul.toggle > li {
+	list-style: none;
+}
+
+ul {
+	padding-inline-start: 1.7em;
+}
+
+ul > li {
+	padding-left: 0.1em;
+}
+
+ol {
+	padding-inline-start: 1.6em;
+}
+
+ol > li {
+	padding-left: 0.2em;
+}
+
+.mono ol {
+	padding-inline-start: 2em;
+}
+
+.mono ol > li {
+	text-indent: -0.4em;
+}
+
+.toggle {
+	padding-inline-start: 0em;
+	list-style-type: none;
+}
+
+/* Indent toggle children */
+.toggle > li > details {
+	padding-left: 1.7em;
+}
+
+.toggle > li > details > summary {
+	margin-left: -1.1em;
+}
+
+.selected-value {
+	display: inline-block;
+	padding: 0 0.5em;
+	background: rgba(206, 205, 202, 0.5);
+	border-radius: 3px;
+	margin-right: 0.5em;
+	margin-top: 0.3em;
+	margin-bottom: 0.3em;
+	white-space: nowrap;
+}
+
+.collection-title {
+	display: inline-block;
+	margin-right: 1em;
+}
+
+.page-description {
+    margin-bottom: 2em;
+}
+
+.simple-table {
+	margin-top: 1em;
+	font-size: 0.875rem;
+	empty-cells: show;
+}
+.simple-table td {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table th {
+	height: 29px;
+	min-width: 120px;
+}
+
+.simple-table-header-color {
+	background: rgb(247, 246, 243);
+	color: black;
+}
+.simple-table-header {
+	font-weight: 500;
+}
+
+time {
+	opacity: 0.5;
+}
+
+.icon {
+	display: inline-block;
+	max-width: 1.2em;
+	max-height: 1.2em;
+	text-decoration: none;
+	vertical-align: text-bottom;
+	margin-right: 0.5em;
+}
+
+img.icon {
+	border-radius: 3px;
+}
+
+.user-icon {
+	width: 1.5em;
+	height: 1.5em;
+	border-radius: 100%;
+	margin-right: 0.5rem;
+}
+
+.user-icon-inner {
+	font-size: 0.8em;
+}
+
+.text-icon {
+	border: 1px solid #000;
+	text-align: center;
+}
+
+.page-cover-image {
+	display: block;
+	object-fit: cover;
+	width: 100%;
+	max-height: 30vh;
+}
+
+.page-header-icon {
+	font-size: 3rem;
+	margin-bottom: 1rem;
+}
+
+.page-header-icon-with-cover {
+	margin-top: -0.72em;
+	margin-left: 0.07em;
+}
+
+.page-header-icon img {
+	border-radius: 3px;
+}
+
+.link-to-page {
+	margin: 1em 0;
+	padding: 0;
+	border: none;
+	font-weight: 500;
+}
+
+p > .user {
+	opacity: 0.5;
+}
+
+td > .user,
+td > time {
+	white-space: nowrap;
+}
+
+input[type="checkbox"] {
+	transform: scale(1.5);
+	margin-right: 0.6em;
+	vertical-align: middle;
+}
+
+p {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+
+.image {
+	border: none;
+	margin: 1.5em 0;
+	padding: 0;
+	border-radius: 0;
+	text-align: center;
+}
+
+.code,
+code {
+	background: rgba(135, 131, 120, 0.15);
+	border-radius: 3px;
+	padding: 0.2em 0.4em;
+	border-radius: 3px;
+	font-size: 85%;
+	tab-size: 2;
+}
+
+code {
+	color: #eb5757;
+}
+
+.code {
+	padding: 1.5em 1em;
+}
+
+.code-wrap {
+	white-space: pre-wrap;
+	word-break: break-all;
+}
+
+.code > code {
+	background: none;
+	padding: 0;
+	font-size: 100%;
+	color: inherit;
+}
+
+blockquote {
+	font-size: 1.25em;
+	margin: 1em 0;
+	padding-left: 1em;
+	border-left: 3px solid rgb(55, 53, 47);
+}
+
+.bookmark {
+	text-decoration: none;
+	max-height: 8em;
+	padding: 0;
+	display: flex;
+	width: 100%;
+	align-items: stretch;
+}
+
+.bookmark-title {
+	font-size: 0.85em;
+	overflow: hidden;
+	text-overflow: ellipsis;
+	height: 1.75em;
+	white-space: nowrap;
+}
+
+.bookmark-text {
+	display: flex;
+	flex-direction: column;
+}
+
+.bookmark-info {
+	flex: 4 1 180px;
+	padding: 12px 14px 14px;
+	display: flex;
+	flex-direction: column;
+	justify-content: space-between;
+}
+
+.bookmark-image {
+	width: 33%;
+	flex: 1 1 180px;
+	display: block;
+	position: relative;
+	object-fit: cover;
+	border-radius: 1px;
+}
+
+.bookmark-description {
+	color: rgba(55, 53, 47, 0.6);
+	font-size: 0.75em;
+	overflow: hidden;
+	max-height: 4.5em;
+	word-break: break-word;
+}
+
+.bookmark-href {
+	font-size: 0.75em;
+	margin-top: 0.25em;
+}
+
+.sans { font-family: ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol"; }
+.code { font-family: "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace; }
+.serif { font-family: Lyon-Text, Georgia, ui-serif, serif; }
+.mono { font-family: iawriter-mono, Nitti, Menlo, Courier, monospace; }
+.pdf .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK JP'; }
+.pdf:lang(zh-CN) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK SC'; }
+.pdf:lang(zh-TW) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK TC'; }
+.pdf:lang(ko-KR) .sans { font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI Variable Display", "Segoe UI", Helvetica, "Apple Color Emoji", Arial, sans-serif, "Segoe UI Emoji", "Segoe UI Symbol", 'Twemoji', 'Noto Color Emoji', 'Noto Sans CJK KR'; }
+.pdf .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .code { font-family: Source Code Pro, "SFMono-Regular", Menlo, Consolas, "PT Mono", "Liberation Mono", Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.pdf .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK JP'; }
+.pdf:lang(zh-CN) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK SC'; }
+.pdf:lang(zh-TW) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK TC'; }
+.pdf:lang(ko-KR) .serif { font-family: PT Serif, Lyon-Text, Georgia, ui-serif, serif, 'Twemoji', 'Noto Color Emoji', 'Noto Serif CJK KR'; }
+.pdf .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK JP'; }
+.pdf:lang(zh-CN) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK SC'; }
+.pdf:lang(zh-TW) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK TC'; }
+.pdf:lang(ko-KR) .mono { font-family: PT Mono, iawriter-mono, Nitti, Menlo, Courier, monospace, 'Twemoji', 'Noto Color Emoji', 'Noto Sans Mono CJK KR'; }
+.highlight-default {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.highlight-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.highlight-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.highlight-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.highlight-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.highlight-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.highlight-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.highlight-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.highlight-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.highlight-default_background {
+	color: rgba(55, 53, 47, 1);
+}
+.highlight-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.highlight-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.highlight-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.highlight-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.highlight-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.highlight-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.highlight-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.highlight-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.highlight-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.block-color-default {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray {
+	color: rgba(120, 119, 116, 1);
+	fill: rgba(120, 119, 116, 1);
+}
+.block-color-brown {
+	color: rgba(159, 107, 83, 1);
+	fill: rgba(159, 107, 83, 1);
+}
+.block-color-orange {
+	color: rgba(217, 115, 13, 1);
+	fill: rgba(217, 115, 13, 1);
+}
+.block-color-yellow {
+	color: rgba(203, 145, 47, 1);
+	fill: rgba(203, 145, 47, 1);
+}
+.block-color-teal {
+	color: rgba(68, 131, 97, 1);
+	fill: rgba(68, 131, 97, 1);
+}
+.block-color-blue {
+	color: rgba(51, 126, 169, 1);
+	fill: rgba(51, 126, 169, 1);
+}
+.block-color-purple {
+	color: rgba(144, 101, 176, 1);
+	fill: rgba(144, 101, 176, 1);
+}
+.block-color-pink {
+	color: rgba(193, 76, 138, 1);
+	fill: rgba(193, 76, 138, 1);
+}
+.block-color-red {
+	color: rgba(212, 76, 71, 1);
+	fill: rgba(212, 76, 71, 1);
+}
+.block-color-default_background {
+	color: inherit;
+	fill: inherit;
+}
+.block-color-gray_background {
+	background: rgba(241, 241, 239, 1);
+}
+.block-color-brown_background {
+	background: rgba(244, 238, 238, 1);
+}
+.block-color-orange_background {
+	background: rgba(251, 236, 221, 1);
+}
+.block-color-yellow_background {
+	background: rgba(251, 243, 219, 1);
+}
+.block-color-teal_background {
+	background: rgba(237, 243, 236, 1);
+}
+.block-color-blue_background {
+	background: rgba(231, 243, 248, 1);
+}
+.block-color-purple_background {
+	background: rgba(244, 240, 247, 0.8);
+}
+.block-color-pink_background {
+	background: rgba(249, 238, 243, 0.8);
+}
+.block-color-red_background {
+	background: rgba(253, 235, 236, 1);
+}
+.select-value-color-uiBlue { background-color: rgba(35, 131, 226, .07); }
+.select-value-color-pink { background-color: rgba(245, 224, 233, 1); }
+.select-value-color-purple { background-color: rgba(232, 222, 238, 1); }
+.select-value-color-green { background-color: rgba(219, 237, 219, 1); }
+.select-value-color-gray { background-color: rgba(227, 226, 224, 1); }
+.select-value-color-transparentGray { background-color: rgba(227, 226, 224, 0); }
+.select-value-color-translucentGray { background-color: rgba(0, 0, 0, 0.06); }
+.select-value-color-orange { background-color: rgba(250, 222, 201, 1); }
+.select-value-color-brown { background-color: rgba(238, 224, 218, 1); }
+.select-value-color-red { background-color: rgba(255, 226, 221, 1); }
+.select-value-color-yellow { background-color: rgba(253, 236, 200, 1); }
+.select-value-color-blue { background-color: rgba(211, 229, 239, 1); }
+.select-value-color-pageGlass { background-color: undefined; }
+.select-value-color-washGlass { background-color: undefined; }
+
+.checkbox {
+	display: inline-flex;
+	vertical-align: text-bottom;
+	width: 16;
+	height: 16;
+	background-size: 16px;
+	margin-left: 2px;
+	margin-right: 5px;
+}
+
+.checkbox-on {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20width%3D%2216%22%20height%3D%2216%22%20fill%3D%22%2358A9D7%22%2F%3E%0A%3Cpath%20d%3D%22M6.71429%2012.2852L14%204.9995L12.7143%203.71436L6.71429%209.71378L3.28571%206.2831L2%207.57092L6.71429%2012.2852Z%22%20fill%3D%22white%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+
+.checkbox-off {
+	background-image: url("data:image/svg+xml;charset=UTF-8,%3Csvg%20width%3D%2216%22%20height%3D%2216%22%20viewBox%3D%220%200%2016%2016%22%20fill%3D%22none%22%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%3E%0A%3Crect%20x%3D%220.75%22%20y%3D%220.75%22%20width%3D%2214.5%22%20height%3D%2214.5%22%20fill%3D%22white%22%20stroke%3D%22%2336352F%22%20stroke-width%3D%221.5%22%2F%3E%0A%3C%2Fsvg%3E");
+}
+	
+</style></head><body><article id="127b5931-6ed8-80f9-a613-feea0ac90524" class="page sans"><header><img class="page-cover-image" src="https://www.notion.so/images/page-cover/gradients_3.png" style="object-position:center 60%"/><div class="page-header-icon page-header-icon-with-cover"><span class="icon">⚙️</span></div><h1 class="page-title"><strong>GlobiancePay Virtual Cards API</strong></h1><p class="page-description"></p></header><div class="page-body"><p id="127b5931-6ed8-8055-b5fa-f3a28558118a" class="">
+</p><p id="127b5931-6ed8-812f-9ce4-de743ff3f783" class="">Base URL</p><p id="127b5931-6ed8-818c-b704-ed5b43750db5" class="">The base URL for all API requests is:</p><p id="127b5931-6ed8-8184-8155-d2cfe105ee65" class=""><a href="https://uat-card-issuer.globiancepay.io/api/">https://uat-card-issuer.globiancepay.io/api</a></p><h2 id="127b5931-6ed8-8001-b6a5-ca073ac80033" class=""><strong>1. API security access</strong></h2><h3 id="127b5931-6ed8-80f7-ad61-ec29abaf4ab3" class=""><strong>1.1 Overview</strong></h3><p id="127b5931-6ed8-80b3-a6f5-e82cc7aa53e6" class="">The open API has 3 security measures to control access and ensure data security: IP whitelist, user token authentication, and AES encryption of data.<br/>Before formal integration, users need to provide the IP addresses from which they will access the API. We will then provide users with the necessary access token and AES key for accessing the API securely.<br/></p><h3 id="127b5931-6ed8-80d5-b64c-e05d7c47a516" class="">1.2 Encryption</h3><ol type="1" id="127b5931-6ed8-805d-a419-eac33daf353c" class="numbered-list" start="1"><li>Data encryption uses AES in CBC mode with PKCS7 padding.</li></ol><ol type="1" id="127b5931-6ed8-8049-9fdb-f6312a290d1e" class="numbered-list" start="2"><li>The IV used for encryption is fixed to the hexadecimal &quot;\x00\x01\x02\x03\x04\x05\x06\x07\x08\x09\x0A\x0B\x0C\x0D\x0E\x0F&quot;.</li></ol><ol type="1" id="127b5931-6ed8-8015-8f34-eccbb2741dbf" class="numbered-list" start="3"><li>After encryption, encode using base64.</li></ol><p id="127b5931-6ed8-80d7-ba93-faa01df61276" class="">
+</p><h3 id="127b5931-6ed8-8003-8b25-d073e7a89bc1" class="">1.3 Example of data transmission</h3><ol type="1" id="127b5931-6ed8-804e-a5ad-f385f98c8047" class="numbered-list" start="1"><li> Convert the business parameters to JSON format ready for encryption, for example: {&quot;test&quot;:&quot;test&quot;}.</li></ol><ol type="1" id="127b5931-6ed8-80a3-b307-c3e0d6e636d0" class="numbered-list" start="2"><li>Perform AES encryption, if the key is &quot;s3429EjAU9WK7cm4&quot;, and encode using Base64. The resulting ciphertext is &quot;CVW0KWKkzXmWIxqBVgpJbw==&quot;.  You can verify the encryption using the testing tool at <a href="https://gchq.github.io/CyberChef">https://gchq.github.io/CyberChef</a>.</li></ol><ol type="1" id="127b5931-6ed8-80e2-9064-de6e4fac5a49" class="numbered-list" start="3"><li>Place the encrypted string into the &quot;data&quot; field of the JSON to be transmitted.  <code>{ &quot;data&quot;: &quot;CVW0KWKkzXmWIxqBVgpJbw==” }</code></li></ol><ol type="1" id="127b5931-6ed8-80fd-99e2-f27f7015d24c" class="numbered-list" start="4"><li>When making the HTTP request, add the &quot;Autoriisation&quot; header and assign the access token provided to you.</li></ol><ol type="1" id="127b5931-6ed8-807b-8d85-e85811ba2b9e" class="numbered-list" start="5"><li>Use HTTP POST method to send the entire json in the third step through HTTP body.</li></ol><ol type="1" id="127b5931-6ed8-80e3-9d73-c45e3269cb71" class="numbered-list" start="6"><li>The returned data is in JSON format, and the &quot;data&quot; field is encrypted using the same method. Decrypting it will yield the original business data.</li></ol><h3 id="128b5931-6ed8-8004-817b-e8f806bf1696" class="">Example of the returned data</h3><p id="128b5931-6ed8-805e-b8e2-fd8008deca8a" class="">
+</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="128b5931-6ed8-8007-bc7f-e6076c02cfe0" class="code"><code class="language-JavaScript">{
+    &quot;code&quot;: 1,
+    &quot;msg&quot;: &quot;card issue success&quot;,
+    &quot;data&quot;: &quot;bfKzWiGNU92CzWV3rhUc&quot;
+}</code></pre><h2 id="127b5931-6ed8-81f9-9d30-dd68d8d8c641" class="">2. Endpoints</h2><h3 id="128b5931-6ed8-80d5-91d4-df0a9c94f2f0" class=""><code>POST /api/cards/get-all</code></h3><p id="128b5931-6ed8-8035-8d67-f0af1eb41b6e" class="">Returns a list of all cards.</p><p id="12ab5931-6ed8-80f4-8e38-ecd529bbe593" class="">
+</p><p id="12ab5931-6ed8-80d9-a1c9-c07afb0b3e2d" class="">Parameters</p><ul id="12ab5931-6ed8-8023-b38b-f25857ae0f16" class="bulleted-list"><li style="list-style-type:disc"><code>date_start</code> :  start date.</li></ul><ul id="12ab5931-6ed8-8042-a846-cad63ac23a02" class="bulleted-list"><li style="list-style-type:disc"><code>date_end</code> :  end date.</li></ul><ul id="12ab5931-6ed8-803b-9a0f-c2f94070aa2d" class="bulleted-list"><li style="list-style-type:disc"><code>page</code> :  page.</li></ul><h3 id="129b5931-6ed8-800b-8398-f1cd8a11468a" class="">Example</h3><p id="129b5931-6ed8-8099-8c84-c475cedfe8a7" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="129b5931-6ed8-8062-a8ec-f70731c0e73a" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /api/cards/get-all
+
+{
+  &quot;date_start&quot;: &quot;2024-09-25&quot;,
+  &quot;date_end&quot;: &quot;2024-10-07&quot;,
+  &quot;page&quot;: 1
+}</code></pre><p id="129b5931-6ed8-801d-88d1-c38d641aebb9" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="129b5931-6ed8-80ed-834f-fac59a9fc236" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">
+{
+    &quot;message&quot;: &quot;cards&quot;,
+    &quot;data&quot;: {
+        &quot;page&quot;: 1,
+        &quot;page_size&quot;: 100,
+        &quot;key_list&quot;: [
+            &quot;card_id&quot;,
+            &quot;org_card_id&quot;,
+            &quot;card_type&quot;,
+            &quot;status&quot;,
+            &quot;remark&quot;,
+            &quot;bal_type&quot;,
+            &quot;sub_id&quot;,
+            &quot;create_time&quot;
+        ],
+        &quot;card_list&quot;: [
+            [
+                &quot;2b9eafb350271008135831&quot;,
+                &quot;18432315009070268434&quot;,
+                1,
+                1,
+                &quot;abcd&quot;,
+                &quot;USD&quot;,
+                null,
+                &quot;2024-10-08 13:58:32&quot;
+            ],
+            [
+                &quot;74afa0ef26247008841042&quot;,
+                &quot;1842534437136957273&quot;,
+                1,
+                1,
+                &quot;xxxx&quot;,
+                &quot;USD&quot;,
+                null,
+                &quot;2024-10-08 14:10:43&quot;
+            ]
+        ]
+    }
+}
+</code></pre><p id="129b5931-6ed8-8036-865b-dc375f65ce80" class="">
+</p><p id="128b5931-6ed8-80ac-98a2-f21813e5f3b9" class="">
+</p><h3 id="127b5931-6ed8-8119-898f-ee7abb7bf817" class=""><code>POST /api/cards/details</code></h3><p id="127b5931-6ed8-8102-a2b9-d5771f314923" class="">Returns card detail.</p><h3 id="127b5931-6ed8-81c6-a3d6-ee4671223149" class="">Parameters</h3><ul id="127b5931-6ed8-8192-8777-ff3dd0fceeff" class="bulleted-list"><li style="list-style-type:disc"><code>cardId</code> :  card ID.</li></ul><h3 id="127b5931-6ed8-8129-8400-c49b98f416bc" class="">Example</h3><p id="127b5931-6ed8-8131-a3b0-fbf8b3790b41" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="127b5931-6ed8-81c8-8821-cf591dcdf003" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /api/cards/details
+
+{ 
+	&quot;cardId&quot;: &quot;0ee24a1920741093174011&quot;
+}</code></pre><p id="127b5931-6ed8-8172-acd4-dce8f0eccd30" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="127b5931-6ed8-819d-b071-db2a1901a5fb" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;card&quot;,
+    &quot;data&quot;: {
+        &quot;code&quot;: 1,
+        &quot;msg&quot;: &quot;card info success&quot;,
+        &quot;data&quot;: {
+            &quot;cardId&quot;: &quot;0ee24a1920741093174011&quot;,
+            &quot;cardNo&quot;: &quot;525794048713148&quot;,
+            &quot;cvv&quot;: &quot;242&quot;,
+            &quot;expDate&quot;: &quot;10/27&quot;,
+            &quot;curId&quot;: &quot;USD&quot;,
+            &quot;cardBal&quot;: &quot;1.97&quot;,
+            &quot;status&quot;: &quot;1&quot;,
+            &quot;remark&quot;: &quot;test 3&quot;,
+            &quot;usedAmt&quot;: &quot;0.00&quot;,
+            &quot;totalAmt&quot;: &quot;1.97&quot;,
+            &quot;createTime&quot;: &quot;2024-10-23 17:40:12&quot;,
+            &quot;productCode&quot;: &quot;E0000001&quot;,
+            &quot;sub_id&quot;: null,
+            &quot;card_email&quot;: null
+        }
+    }
+}</code></pre><p id="129b5931-6ed8-80bd-9eb1-dd8083b64b4b" class="">
+</p><h3 id="129b5931-6ed8-8075-910e-fdb5c4660f32" class=""><code>POST /api/cards/card-issue</code></h3><p id="129b5931-6ed8-809e-b522-fb8c829ccbaf" class="">Issue the card.</p><h3 id="129b5931-6ed8-8095-bf08-fe4922362551" class="">Parameters</h3><ul id="129b5931-6ed8-80c2-96de-fcefe9adc8fa" class="bulleted-list"><li style="list-style-type:disc"><code>productCode</code> :  Code of product.</li></ul><ul id="12ab5931-6ed8-80b2-baea-d20aa1f962a4" class="bulleted-list"><li style="list-style-type:disc"><code>currency</code> :  Currency</li></ul><ul id="12ab5931-6ed8-80d0-8f11-d37cf396eb23" class="bulleted-list"><li style="list-style-type:disc"><code>cardType</code> :  Type of card: <code>single_issue</code> | <code>multi_issue</code></li></ul><ul id="12ab5931-6ed8-808f-b937-f96c0b458645" class="bulleted-list"><li style="list-style-type:disc"><code>amt</code> : Amount</li></ul><ul id="12ab5931-6ed8-80e7-af19-ebaf96b9a24b" class="bulleted-list"><li style="list-style-type:disc"><code>expdate</code> : Expiration date</li></ul><ul id="12ab5931-6ed8-8001-9772-f8725562cbf5" class="bulleted-list"><li style="list-style-type:disc"><code>remark</code> : Remark</li></ul><h3 id="129b5931-6ed8-8017-a322-dede2b140aab" class="">Example</h3><p id="129b5931-6ed8-80ca-9255-e2e37cdecd5a" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="129b5931-6ed8-80d8-8074-dd883e8cba11" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /api/cards/card-issue
+
+{
+  &quot;productCode&quot;: &quot;E0000001&quot;,
+  &quot;currency&quot;: &quot;USD&quot;,
+  &quot;cardType&quot;: &quot;single_issue&quot;,
+  &quot;amt&quot;: 100,
+  &quot;expdate&quot;: &quot;2025-11-30&quot;,
+  &quot;remark&quot;: &quot;Card Remark&quot;
+}
+</code></pre><p id="129b5931-6ed8-8068-adce-c512db6a01d7" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-8029-b40d-c7ba8b9d61a0" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">{
+    &quot;message&quot;: &quot;card&quot;,
+    &quot;data&quot;: {
+        &quot;code&quot;: 1,
+        &quot;msg&quot;: &quot;card issue success&quot;,
+        &quot;data&quot;: {
+            &quot;userId&quot;: &quot;100391&quot;,
+            &quot;cardNo&quot;: &quot;5254970576159498&quot;,
+            &quot;cvv&quot;: &quot;193&quot;,
+            &quot;expDate&quot;: &quot;11/25&quot;,
+            &quot;cardBal&quot;: &quot;1.97&quot;,
+            &quot;curId&quot;: &quot;USD&quot;,
+            &quot;cardId&quot;: &quot;60c2792320471028195254&quot;,
+            &quot;tradeNo&quot;: &quot;1852747547429422209&quot;,
+            &quot;sub_id&quot;: null,
+            &quot;request_id&quot;: &quot;372e8626-179d-49de-8494-ad2081228153&quot;
+        }
+    }
+}</code></pre><p id="12db5931-6ed8-8009-b144-e0d2829802af" class="">
+</p><h3 id="12ab5931-6ed8-80df-9e30-c666be1d9ba3" class=""><code>POST /api/cards/top-up</code></h3><p id="12ab5931-6ed8-807b-b975-c9e3a6fc034f" class="">Top up to the card.</p><h3 id="12ab5931-6ed8-8031-95c6-c835e6034439" class="">Parameters</h3><ul id="12ab5931-6ed8-808f-810a-cb1645cfed96" class="bulleted-list"><li style="list-style-type:disc"><code>cardId</code> :  card ID.</li></ul><ul id="12db5931-6ed8-8082-ae5e-f3fb636b3cb6" class="bulleted-list"><li style="list-style-type:disc"><code>amt</code>: Amount.</li></ul><ul id="12db5931-6ed8-806b-b0df-f224709ebbb4" class="bulleted-list"><li style="list-style-type:disc"><code>currency</code>: Currency.</li></ul><h3 id="12ab5931-6ed8-80c4-b262-f60fe8d5d9e6" class="">Example</h3><p id="12ab5931-6ed8-809d-99bd-d031a613674f" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12ab5931-6ed8-801c-8b73-f2de2e081344" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /issuer/cards/details
+
+{
+    &quot;cardId&quot;:&quot;09f1585822241124175649&quot;,
+    &quot;amt&quot;:2,
+    &quot;currency&quot;:&quot;USD&quot;
+}</code></pre><p id="12ab5931-6ed8-80ba-99a1-cba8306cb2a3" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-80e0-9953-f7459503b5a4" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">{
+	&quot;message&quot;:&quot;success&quot;
+}</code></pre><p id="12db5931-6ed8-809a-a9fe-d0bc6c699d4d" class="">
+</p><h3 id="12db5931-6ed8-8016-ad84-f9698db6c184" class=""><code>POST /api/cards/transaction-list</code></h3><p id="12db5931-6ed8-80bf-ad6a-fc7d854156ce" class="">Returns cards transaction list.</p><h3 id="12db5931-6ed8-8076-beca-e4327d8d2c17" class="">Parameters</h3><ul id="12db5931-6ed8-8003-b000-d2fbfe69172e" class="bulleted-list"><li style="list-style-type:disc"><code>date_start</code> :  Start Date.</li></ul><ul id="12db5931-6ed8-806a-b83d-c1481fd8a219" class="bulleted-list"><li style="list-style-type:disc"><code>date_end</code>: End Date.</li></ul><ul id="12db5931-6ed8-80ce-ac00-ee5fe3a3a65b" class="bulleted-list"><li style="list-style-type:disc"><code>page</code>: Page Number</li></ul><h3 id="12db5931-6ed8-8050-b309-f27e6864c787" class="">Example</h3><p id="12db5931-6ed8-80e9-a97c-e8832c423324" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-80cc-8df1-f5da1bc50a4b" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /api/cards/transaction-list
+
+{
+    &quot;date_start&quot;:&quot;2024-10-28&quot;,
+    &quot;date_end&quot;:&quot;2024-10-28&quot;,
+    &quot;page&quot;:1
+}</code></pre><p id="12db5931-6ed8-80f2-a310-e2833ec6ccef" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-8080-9276-d2dc09ed51b2" class="code"><code class="language-JavaScript">{
+    &quot;message&quot;: &quot;transaction&quot;,
+    &quot;data&quot;: {
+        &quot;page&quot;: 1,
+        &quot;page_size&quot;: 100,
+        &quot;key_list&quot;: [
+            &quot;bal_amt&quot;,
+            &quot;bal_type&quot;,
+            &quot;card_id&quot;,
+            &quot;org_card_id&quot;,
+            &quot;note&quot;,
+            &quot;op_time&quot;,
+            &quot;trans_id&quot;,
+            &quot;sub_id&quot;
+        ],
+        &quot;trans_list&quot;: [
+            [
+                &quot;-1.9700&quot;,
+                &quot;USD&quot;,
+                &quot;60c2753720241028115254&quot;,
+                &quot;1850747543427462209&quot;,
+                &quot;Issue card&quot;,
+                &quot;2024-10-28 11:52:55&quot;,
+                2035328,
+                null
+            ],
+            [
+                &quot;-1.9700&quot;,
+                &quot;USD&quot;,
+                &quot;09f1515320241124175649&quot;,
+                &quot;1849389576785117185&quot;,
+                &quot;Top up card&quot;,
+                &quot;2024-10-28 11:56:41&quot;,
+                2035348,
+                null
+            ]
+        ]
+    }
+}</code></pre><p id="12db5931-6ed8-8084-aa13-e90de5e10729" class="">
+</p><h3 id="12db5931-6ed8-8050-b126-d69a0027e05f" class=""><code>POST /api/cards/settlement</code></h3><p id="12db5931-6ed8-8078-98e9-e522d846b05e" class="">Returns the card settlement details.</p><h3 id="12db5931-6ed8-8083-b246-eaed02370bd1" class="">Parameters</h3><ul id="12db5931-6ed8-8082-a7fe-fcfe0845e38e" class="bulleted-list"><li style="list-style-type:disc"><code>cardId</code>: card ID.</li></ul><ul id="12db5931-6ed8-809f-9ef1-c77e0370836a" class="bulleted-list"><li style="list-style-type:disc"><code>date_start</code> :  Start Date.</li></ul><ul id="12db5931-6ed8-80f5-a220-f5bdc663eed7" class="bulleted-list"><li style="list-style-type:disc"><code>date_end</code>: End Date.</li></ul><ul id="12db5931-6ed8-803c-8ed3-de0fa5b50474" class="bulleted-list"><li style="list-style-type:disc"><code>page</code>: Page Number</li></ul><h3 id="12db5931-6ed8-8054-90d9-d9af1c25eda3" class="">Example</h3><p id="12db5931-6ed8-8002-b0b9-f9660907a70c" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-8042-8a2f-f6db2a1d58d8" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /api/cards/settlement
+
+{
+		&quot;cardId&quot;: &quot;09f1585822241124175649&quot;,
+    &quot;date_start&quot;:&quot;2024-10-28&quot;,
+    &quot;date_end&quot;:&quot;2024-10-28&quot;,
+    &quot;page&quot;:1
+}</code></pre><p id="12db5931-6ed8-8003-a950-e1d6c005a375" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-80ec-a0f7-c8c1215131d4" class="code"><code class="language-JavaScript">{
+    &quot;message&quot;: &quot;settlement&quot;,
+
+    &quot;pageInfo&quot;: {
+        &quot;total&quot;: 2,
+        &quot;current&quot;: 1,
+        &quot;size&quot;: 100
+    },
+    &quot;list&quot;: [
+        {
+            &quot;txnId&quot;: &quot;F1572121779421708289&quot;,                
+            &quot;billCcy&quot;: &quot;USD&quot;,
+            &quot;billAmt&quot;: -75.47,
+            &quot;merchName&quot;: &quot;EXPEDIA 72392451661043 EXPEDIA.CN ESP &quot;,
+            &quot;cardId&quot;: &quot;1571773237683429378&quot;,
+            &quot;authTxnId&quot;: &quot;A1571774975501815810&quot;,
+            &quot;clearingDate&quot;: &quot;2022-09-20&quot;,
+            &quot;txnType&quot;: &quot;R&quot;,
+            &quot;mcc&quot;: &quot;4722 Travel Agencies, Tour Operators&quot;,
+            &quot;txnAmt&quot;: -527.99, 
+            &quot;txnCcy&quot;: &quot;CNY&quot;
+        },
+        {
+            &quot;billCcy&quot;: &quot;USD&quot;,
+            &quot;billAmt&quot;: 75.52,
+            &quot;merchName&quot;: &quot;EXPEDIA 72392451661043 EXPEDIA.CN ESP &quot;,
+            &quot;cardId&quot;: &quot;1571773237683429378&quot;,
+            &quot;authTxnId&quot;: &quot;A1571774975501815810&quot;,
+            &quot;clearingDate&quot;: &quot;2022-09-19&quot;,
+            &quot;txnType&quot;: &quot;C&quot;,
+            &quot;mcc&quot;: &quot;4722 Travel Agencies, Tour Operators&quot;,
+            &quot;txnAmt&quot;: 527.99,
+            &quot;txnId&quot;: &quot;F1571864633350946817&quot;,
+            &quot;txnCcy&quot;: &quot;CNY&quot;
+        }
+    ]
+}
+</code></pre><p id="12db5931-6ed8-80dd-8e04-d28ed1e6108a" class="">
+</p><h3 id="12db5931-6ed8-80ab-8e0a-dc118d1d3586" class=""><code>POST /api/cards/authorization</code></h3><p id="12db5931-6ed8-80f9-8c58-e56b75176914" class="">Returns the card authorization details.</p><h3 id="12db5931-6ed8-80cf-8d16-c51cbd27fa6c" class="">Parameters</h3><ul id="12db5931-6ed8-8086-b401-f1cb42ea6d9e" class="bulleted-list"><li style="list-style-type:disc"><code>cardId</code>: card ID.</li></ul><ul id="12db5931-6ed8-808f-aa61-c7e93dab34ad" class="bulleted-list"><li style="list-style-type:disc"><code>start</code> :  Start Page.</li></ul><h3 id="12db5931-6ed8-8066-9189-d94d88cbce1d" class="">Example</h3><p id="12db5931-6ed8-8037-b5f2-c8dd3806fa65" class="">Request:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-80bd-81ea-db9942f6c50c" class="code"><code class="language-JavaScript" style="white-space:pre-wrap;word-break:break-all">POST /api/cards/authorization
+
+{
+		&quot;cardId&quot;: &quot;09f1585822241124175649&quot;,
+    &quot;start&quot;:1
+}</code></pre><p id="12db5931-6ed8-80b1-9ab1-d060d05d207d" class="">Response:</p><script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js" integrity="sha512-7Z9J3l1+EYfeaPKcGXu3MS/7T+w19WtKQY/n+xzmw4hZhJ9tyYmcUS+4QqAlzhicE5LAfMQSF3iFTK9bQdTxXg==" crossorigin="anonymous" referrerPolicy="no-referrer"></script><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism.min.css" integrity="sha512-tN7Ec6zAFaVSG3TpNAKtk4DOHNpSwKHxxrsiw4GHKESGPs5njn/0sMCUMl2svV4wo4BK/rCP7juYz+zx+l6oeQ==" crossorigin="anonymous" referrerPolicy="no-referrer"/><pre id="12db5931-6ed8-80f3-bdb0-d315d0d551ee" class="code"><code class="language-JavaScript">{
+    &quot;message&quot;: &quot;authorization&quot;,
+    &quot;pageInfo&quot;: {
+        &quot;total&quot;: 1,
+        &quot;current&quot;: 1,
+        &quot;size&quot;: 100
+    },
+    &quot;list&quot;: [
+        {
+           
+            &quot;merchName&quot;: &quot;EXPEDIA 72392451661043 EXPEDIA.CN ESP &quot;,
+            &quot;clearingDate&quot;: &quot;2022-09-19&quot;,
+            &quot;txnType&quot;: &quot;A&quot;,
+            &quot;mcc&quot;: &quot;4722 Travel Agencies, Tour Operators&quot;,
+            &quot;txnAmt&quot;: 527.99,
+            &quot;txnCcy&quot;: &quot;CNY&quot;,
+            &quot;billAmt&quot;: 75.52,
+            &quot;billCcy&quot;: &quot;USD&quot;,
+            &quot;txnStatus&quot;: &quot;1&quot;,
+            &quot;cardId&quot;: &quot;1571773237683429378&quot;,
+            &quot;txnTime&quot;: &quot;2022-09-19T16:15:30.983&quot;,
+            &quot;originTxnId&quot;: &quot;0&quot;,
+            &quot;merchCtry&quot;: &quot;ESP&quot;,
+            &quot;txnId&quot;: &quot;A1571774975501815810&quot;,
+            &quot;sub_id&quot;: &quot;SW1131e820240429145842&quot;,
+            &quot;forcePost&quot;: false
+        }
+    ]
+}
+
+</code></pre><p id="12db5931-6ed8-807b-9f0e-e5e1e0acc9bc" class="">
+</p><h2 id="127b5931-6ed8-81cf-b7d2-fd36988d90b8" class="">Errors</h2><p id="127b5931-6ed8-817d-9328-d21062fe6c01" class="">This API uses the following error codes:</p><ul id="127b5931-6ed8-8110-bf6c-d6a0cf29b776" class="bulleted-list"><li style="list-style-type:disc"><code>400 Bad Request</code>: The request was malformed or missing required parameters.</li></ul><ul id="127b5931-6ed8-81bb-afc6-dc64dc2435bc" class="bulleted-list"><li style="list-style-type:disc"><code>401 Unauthorized</code>: The API key provided was invalid or missing.</li></ul><ul id="127b5931-6ed8-811d-b287-ef60bb3b78e1" class="bulleted-list"><li style="list-style-type:disc"><code>404 Not Found</code>: The requested resource was not found.</li></ul><ul id="127b5931-6ed8-8132-98b8-cd80fd90785a" class="bulleted-list"><li style="list-style-type:disc"><code>500 Internal Server Error</code>: An unexpected error occurred on the server.</li></ul></div></article><span class="sans" style="font-size:14px;padding-top:2em"></span></body></html>
